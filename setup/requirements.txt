@@ -8,3 +8,7 @@ pandas==0.24.2
 jupyterlab
 sklearn-pandas
 ipywidgets
+flask
+dill
+requests
+xgboost
