@@ -16,9 +16,8 @@ training_data = "data/titanic.csv"
 include = ["Age", "Sex", "Embarked", "Survived"]
 dependent_variable = include[-1]
 
-model_path = Path.cwd().parent.joinpath("webapp", "model")
-model_filename = model_path.joinpath("titanic_model.pkl")
-model_columns_filename = model_path.joinpath("titanic_model_columns.pkl")
+model_filename = "model/titanic_model.pkl"
+model_columns_filename = "model/titanic_model_columns.pkl"
 
 # These will be populated at training time
 model_columns = None
@@ -27,11 +26,17 @@ clf = None
 
 @app.route("/")
 def index():
+    """Index for the app, this will be at the root of the API
+    """
     return render_template("index.html")
 
 
 @app.route("/predict", methods=["POST"])
 def predict():
+    """Endpoint for the prediction of the model
+    
+    To make a prediction, the user needs to pass a json object
+    """
     if clf:
         try:
             json_ = request.json
@@ -54,6 +59,11 @@ def predict():
 
 @app.route("/train", methods=["GET"])
 def train():
+    """ 
+    Endpoint used to train the model, this is only one way to do this, 
+    a more common approach is that you might need to traqin your model and then 
+    serialise it or persist it somewhere else"""
+
     # using random forest as an example
     # can do the training separately and just update the pickles
     from sklearn.ensemble import RandomForestClassifier as rf
@@ -99,9 +109,10 @@ def train():
 
 @app.route("/wipe", methods=["GET"])
 def wipe():
+    """ Endpoint to delete the pickle files for the model and the column names"""
     try:
-        shutil.rmtree("model")
-        os.makedirs(model_directory)
+        shutil.rmtree(model_path)
+        os.makedirs(model_path)
         return "Model wiped"
 
     except Exception as e:
@@ -116,14 +127,14 @@ if __name__ == "__main__":
         port = 80
 
     try:
-        clf = pickle.load(model_file_name)
-        print("model loaded")
-        model_columns = pickle.load(model_columns_file_name)
-        print("model columns loaded")
+        clf = pickle.load(model_filename)
+        print("Model loaded")
+        model_columns = pickle.load(model_columns_filename)
+        print("Model columns loaded")
 
     except Exception as e:
-        print("No model here")
-        print("Train first")
+        print("Oops! No model here")
+        print("Please train your model first")
         print(str(e))
         clf = None
 

@@ -1,3 +1,55 @@
-Intro to DevOps
-=================
+Hands-on: Deploying a self contained model
+============================================
+
+Let's get started with some practical exercises.
+
+Start by cloning the tutorial repo 👉🏼 `https://github.com/trallard/ml_devops_tutorial <https://github.com/trallard/ml_devops_tutorial>`_ 
+
+Predicting Titanic survival
+""""""""""""""""""""""""""""""
+
+We are going to use the popular Titanic dataset to generate a predictive model.
+The goal is to predict whether someone would have survived in the Titanic based on features such as: age,
+class on the sip, sex, and fare.
+
+Said model will be then exposed as a REST API using Flask.
+
+You can find the code for the app in ``hands-on/webapp``
+
+You will notice from the directory that you have n ``app.py`` file. This is 
+where we create the app and expose the model as a REST API.
+
+You can run the app from your terminal like so:
+::
+    cd hands-on/webapp
+    flask run
+
+Once the app is running you will be able to access it on `http://localhost:5000 <http://localhost:5000>`_
+Then access the multiple endpoints using curl or Postman. For example
+::
+    curl -X GET http://localhost:5000  # should return the index
+    curl -X GET http://localhost:5000/train # will train the model 
+    curl -X GET http://localhost:5000/wipe  # will delete the model
+    curl -d '[
+    {"Age": 85, "Sex": "male", "Embarked": "S"},
+    {"Age": 24, "Sex": "female", "Embarked": "C"},
+    {"Age": 3, "Sex": "male", "Embarked": "C"},
+    {"Age": 21, "Sex": "male", "Embarked": "S"}
+    ]' -H "Content-Type: application/json" \
+        -X POST http://localhost:5000/predict && \
+        echo -e "\n -> predict OK"
+
+
+Once you ahev finished you can stop the app with ``Ctrl + C``.
+
+Deploying your app
+--------------------
+
+The next step will be to deploy the app. To do so we are going to use `Azure DevOps <https://azure.microsoft.com/services/devops/?WT.mc_id=mlops-github-taallard>`_
+
+
+.. image:: ./_static/assets/mlops.png
+ 
+
+🚦Let's make sure you have access to Azure DevOps and other tools.
 
