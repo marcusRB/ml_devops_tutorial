@@ -14,6 +14,7 @@ Welcome to MLOps Python tutorial!
    setup
    gettingready
    interpretable
+   devops101
    devops
    glossary
 
