@@ -16,6 +16,9 @@ We now have 3 pipelines that we need to setup.
    deploys and tests model image as web service in QA and Prod
    environment
 
+.. note:: Start by cloning this repo https://github.com/trallard/MLOps_complementary
+   And make sure to have followed the instructions on :ref:`GettingReady` 
+
 1. Set up Build Pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~
 
@@ -48,47 +51,55 @@ complete.
 `release-pipelines <../release-pipelines>`__ to your local filesystem so
 you can import it.
 
-| **Also Note:** If this is the first time you are creating a release
-pipeline, you would see the following option, click on **New Pipeline**
-| |import release pipeline|
-
 | To enable the option to **Import release pipeline**, we must have
 atleast one release pipeline so let's create one with an empty job.
-| |import release pipeline|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-empty-job.png
 
 | On the next screen, click on **Save** and then click **Ok** to save
 the empty release pipeline.
-| |import release pipeline|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-save-empty.png
+
 
 **Steps**
 
 #. | Select the Release tab from the menu on the left, then click the
    New dropdown on top and click on **Import Release pipeline**
-   | |import release pipeline|
+
+.. image:: https://github.com/microsoft/MLOpsPython/blob/master/docs/images/release-import.png
+
 
 #. | On the next screen, navigate to **release-pipelines** folder and
    select **retrainingtrigger.json** pipeline file, click import. You
    should now see the following screen. Under Stages click on the
    Retrain stage, where it shows the red error sign.
-   | |release retraining triggger|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-retrainingtrigger.png
+
 
    | Click on agent job and then from the drop down for Agent Pool on
    the right side select **Hosted Ubuntu 1604** agent to execute your
    run and click **Save** button on top right.
-   | |release retraining agent|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-retrainingagent.png
 
 #. We would now link the variable group we created earlier to this
    release pipeline. To do so click on the **Variables** tab, then click
    on **Variable** groups and then select **Link variable group** and
    select the variable group that we created in previous step and click
    **Link** followed by **Save** button.
-   |release retraining artifact|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-link-vg.png
+
+
 #. | We want the retraining pipeline to be triggered every time build
    pipeline is complete. To create this dependency, we will link the
    artifact from build pipeline as a trigger for retraining trigger
    release pipeline. To do so, click on the **pipeline** tab and then
    select **Add an artifact** option under Artifacts.
-   | |release pipeline view|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-retrainingpipeline.png
 
 #. This will open up a pop up window, on this screen:
 
@@ -103,7 +114,9 @@ the empty release pipeline.
    -  Field **Devault version** will get auto populated **Latest**, you
       can leave them as it is.
    -  Click on **Add**, and then **Save** the pipeline
-       |release retraining artifact|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-retrainingartifact.png
+
 
 #. Artifact is now added for retraining trigger pipeline, hit the
    **save** button on top right and then click **ok**.
@@ -111,19 +124,18 @@ the empty release pipeline.
 #. | To trigger this pipeline every time build pipeline executes, click
    on the lighting sign to enable the **Continous Deployment Trigger**,
    click **Save**.
-   |  |release retraining artifact|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-retrainingtrigger1.png
+
 
 #. | If you want to run this pipeline on a schedule, you can set one by
    clicking on **Schedule set** in Artifacts section.
-   | |release retraining artifact|
 
 #. For the first time, we will manually trigger this pipeline.
 
 -  Click Releases option on the left hand side and navigate to the
    release pipeline you just created.
-    |release retraining artifact|
 -  Click **Create Release**
-    |release create|
 -  On the next screen click on **Create** button, this creates a manual
    release for you.
 
@@ -132,7 +144,7 @@ The AML pipeline will train the model and package it into image. It will
 take around 10 mins to complete. The next steps need this pipeline to
 complete successfully.
 
-7. Set up release (Deployment) pipeline
+3. Set up release (Deployment) pipeline
 ~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
 
 **Note:** For setting up release pipelines, first download the
@@ -151,32 +163,29 @@ Let's set up the release deployment pipeline now.
 #. | As done in previous step, Select the Release tab from the menu on
    the left, then click the New dropdown on top and click on **Import
    Release pipeline**
-   | |import release pipeline|
 
 #. | On the next screen, navigate to **release-pipelines** folder and
    select **releasedeployment.json** pipeline file, click import. You
    should now see the following screen. Under Stages click on the QA
    environment's \*\*view stage task", where it shows the red error
    sign.
-   | |release retraining triggger|
+
+.. image::  https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-deployment.png
 
    | Click on agent job and then from the drop down for Agent Pool on
    the right side select **Hosted Ubuntu 1604** agent to execute your
    run and click **Save** button on top right.
-   | |release retraining agent|
 
 | Follow the same steps for **Prod Environment** and select **Hosted
 Ubuntu 1604** for agent pool and save the pipeline.
-|  |release retraining agent|
 
 #. | We would now link the variable group we created earlier to this
    release pipeline. To do so click on the **Variables** tab, then click
    on **Variable** groups and then select **Link variable group** and
    select the variable group that we created in previous step and click
    **Link** followed by **Save** button.
-   | |release retraining artifact|
 
-#. We now need to add artifact that will trigger this pipeline. We will
+#. We now need to add artefact that will trigger this pipeline. We will
    add two artifacts:
 
    -  Build pipeline output as artifact since that contains our
@@ -201,12 +210,11 @@ Here are the steps to add build output as artifact
    -  Field **Devault version** will get auto populated **Latest**, you
       can leave them as it is.
    -  Click on **Add**, and then **Save** the pipeline
-       |release retraining artifact|
+
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-retrainingartifact.png
+
 
 Here are the steps to add ACR as an artifact
-
-|release retraining agent|
-
 ::
 
     - Click on pipeline tab to go back to pipeline view and click **Add an artifact**. This will open a pop up window
@@ -220,14 +228,17 @@ Here are the steps to add ACR as an artifact
     - For Source alias, keep the default generated name.
     - Click Add
     - Click on lighting sign to enable the **Continous Deployment Trigger**, click Save.
-    ![release retraining artifact](./images/release-deploymentcitrigger.png)
+
+    .. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-deploymentcitrigger.png
+    
 
 #. We now have QA environment continously deployed each time there is a
    new image available in container registry. You can select
    pre-deployment conditions for prod environment, normally you don't
    want it to be auto deployed, so select manual only trigger here.
 
-   |release retraining artifact|
+.. image:: https://github.com/microsoft/MLOpsPython/raw/master/docs/images/release-deploymentprodtrigger.png
+
 
    To deploy a release manually, follow the document
    `here <https://docs.microsoft.com/en-us/azure/devops/pipelines/get-started-designer?view=azure-devops&tabs=new-nav#deploy-a-release>`__

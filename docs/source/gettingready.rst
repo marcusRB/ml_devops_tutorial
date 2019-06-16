@@ -1,3 +1,5 @@
+.. _Gettingready:
+
 Additional setup 
 ===================
 
