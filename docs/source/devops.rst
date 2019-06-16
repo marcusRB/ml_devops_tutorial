@@ -53,3 +53,19 @@ The next step will be to deploy the app. To do so we are going to use `Azure Dev
 
 🚦Let's make sure you have access to Azure DevOps and other tools.
 
+☁️ We are going to deploy the app within Docker containers and using AzureDevOps.
+
+1. Login to `AzureDevOps <https://azure.microsoft.com/services/devops/?WT.mc_id=mlops-github-taallard>`_ 
+2. Go to Pipelines > New Pipelines 
+3. Select use the classic editor
+4. Complete the details with your repo. Note that you might be asked to login with GitHub for this.
+You might be redirected to GitHub to install the Azure Pipelines app. If so, select Approve and install.
+5. Select the Docker runner
+6. Complete the details of the form. Here you can choose if using a private Azure container registry or DockerHub
+7. Save and run
+
+As soon as the pipeline completes you can see the image being pushed to the registry.
+
+Since we are building the image from the Repo and within pipelines we can then use this as an artifact for the next part: the release.
+
+🚧🚧

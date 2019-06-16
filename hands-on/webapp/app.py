@@ -90,6 +90,10 @@ def train():
     # capture a list of columns that will be used for prediction
     global model_columns
     model_columns = list(x.columns)
+
+    if not os.path.exists("model"):
+        os.makedirs("model")
+
     with open(model_columns_filename, "wb") as f:
         pickle.dump(model_columns, f)
 
