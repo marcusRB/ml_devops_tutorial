@@ -16,6 +16,7 @@ Welcome to MLOps Python tutorial!
    interpretable
    devops101
    devops
+   endtoend
    glossary
 
 .. toctree::
